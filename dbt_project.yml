@@ -1,0 +1,28 @@
+name: "wayplorer"
+version: "1.0.0"
+config-version: 2
+
+profile: "wayplorer"
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  wayplorer:
+    +persist_docs:
+      relation: true
+      columns: true
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

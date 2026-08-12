@@ -1,0 +1,77 @@
+version: 2
+
+models:
+  - name: stg_silver_records_resolved
+    description: Standardized Snowflake staging model for multi-tenant CRM records.
+    columns:
+      - name: organization_id
+        tests:
+          - not_null
+      - name: module_key
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']
+      - name: application_id
+        tests:
+          - not_null
+      - name: operation_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['INSERT', 'UPDATE']
+      - name: cdc_timestamp
+        tests:
+          - not_null
+      - name: resolved_record_id
+        tests:
+          - not_null
+      - name: record_id
+        tests:
+          - not_null
+
+  - name: stg_silver_activity_resolved
+    description: Standardized Snowflake staging model for multi-tenant CRM activities.
+    columns:
+      - name: organization_id
+        tests:
+          - not_null
+      - name: module_key
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['CALLS', 'EMAILS', 'TASKS']
+      - name: activity_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['CALL', 'EMAIL', 'TASK']
+      - name: application_id
+        tests:
+          - not_null
+      - name: activity_date
+        tests:
+          - not_null
+      - name: operation_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['INSERT', 'UPDATE']
+      - name: record_id
+        tests:
+          - not_null
+
+  - name: stg_silver_kpi_daily_summary
+    description: Standardized Snowflake staging model for daily KPI snapshots.
+    columns:
+      - name: organization_id
+        tests:
+          - not_null
+      - name: kpi_date
+        tests:
+          - not_null
+      - name: kpi_readiness_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['READY', 'PARTIAL', 'BLOCKED']

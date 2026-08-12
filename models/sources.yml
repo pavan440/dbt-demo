@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: wayplorer_landing
+    database: "{{ target.database }}"
+    schema: "{{ var('wayplorer_landing_schema', 'LANDING') }}"
+    tables:
+      - name: SILVER_RECORDS_RESOLVED_RAW
+        description: Multi-tenant resolved CRM records loaded from the Wayplorer Silver PoC stage.
+        columns:
+          - name: organization_id
+            tests:
+              - not_null
+          - name: module_key
+            tests:
+              - not_null
+          - name: record_id
+            tests:
+              - not_null
+      - name: SILVER_ACTIVITY_RESOLVED_RAW
+        description: Multi-tenant resolved activities loaded from the Wayplorer Silver PoC stage.
+        columns:
+          - name: organization_id
+            tests:
+              - not_null
+          - name: module_key
+            tests:
+              - not_null
+          - name: record_id
+            tests:
+              - not_null
+      - name: SILVER_KPI_DAILY_SUMMARY_RAW
+        description: Multi-tenant KPI daily summary records loaded from the Wayplorer Silver PoC stage.
+        columns:
+          - name: organization_id
+            tests:
+              - not_null
+          - name: kpi_date
+            tests:
+              - not_null

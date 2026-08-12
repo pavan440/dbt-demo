@@ -1,0 +1,19 @@
+select
+    organization_id,
+    tenant_name,
+    tenant_domain,
+    tenant_company_size,
+    kpi_date,
+    pipeline_created_count,
+    qualified_lead_count,
+    active_opportunity_count,
+    stage_conversion_rate,
+    avg_stage_dwell_days,
+    activity_volume,
+    goal_attainment_ratio,
+    pipeline_coverage_ratio,
+    kpi_readiness_status,
+    pipeline_run_id,
+    src_filename,
+    loaded_at
+from {{ source('wayplorer_landing', 'SILVER_KPI_DAILY_SUMMARY_RAW') }}

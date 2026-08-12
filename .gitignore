@@ -1,0 +1,22 @@
+# Local dbt configuration
+.dbt/
+
+# Virtual environment and Python cache
+.venv/
+__pycache__/
+*.pyc
+
+# dbt build artifacts and logs
+target/
+logs/
+
+# Local caches and temp files
+.pip-cache/
+.tmp/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+
+# Local generated data
+*.parquet

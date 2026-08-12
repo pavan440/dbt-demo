@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: int_record_daily_activity
+    description: Daily CRM record grain with joined activity volume for Snowflake serving models.
+    columns:
+      - name: organization_id
+        tests:
+          - not_null
+      - name: record_id
+        tests:
+          - not_null
+      - name: record_date
+        tests:
+          - not_null
+      - name: module_key
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']
+
+  - name: int_organization_daily_scorecard
+    description: Tenant-day scorecard combining KPI snapshots and CRM activity rollups.
+    columns:
+      - name: organization_id
+        tests:
+          - not_null
+      - name: kpi_date
+        tests:
+          - not_null
+      - name: kpi_readiness_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['READY', 'PARTIAL', 'BLOCKED']
