@@ -60,18 +60,17 @@ jobs:
                 client_session_keep_alive: false
           EOF
 
-      - name: Write dbt vars file
-        shell: bash
-        run: |
-          cat <<EOF > .github/dbt/vars.json
-          {"wayplorer_landing_schema": "$WAYPLORER_LANDING_SCHEMA"}
-          EOF
-
       - name: Check dbt connection
         run: dbt debug
 
       - name: Run dbt
-        run: dbt run --vars-file .github/dbt/vars.json
+        shell: bash
+        run: |
+          DBT_VARS=$(printf '{"wayplorer_landing_schema":"%s"}' "$WAYPLORER_LANDING_SCHEMA")
+          dbt run --vars "$DBT_VARS"
 
       - name: Test dbt
-        run: dbt test --vars-file .github/dbt/vars.json
+        shell: bash
+        run: |
+          DBT_VARS=$(printf '{"wayplorer_landing_schema":"%s"}' "$WAYPLORER_LANDING_SCHEMA")
+          dbt test --vars "$DBT_VARS"
