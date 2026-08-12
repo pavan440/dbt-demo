@@ -62,7 +62,9 @@ jobs:
         run: dbt debug
 
       - name: Parse project
-        run: dbt parse --vars '{wayplorer_landing_schema: "${{ env.WAYPLORER_LANDING_SCHEMA }}"}'
+        run: |
+          dbt parse --vars '{"wayplorer_landing_schema": "'"$WAYPLORER_LANDING_SCHEMA"'"}'
 
       - name: Build models
-        run: dbt build --vars '{wayplorer_landing_schema: "${{ env.WAYPLORER_LANDING_SCHEMA }}"}'
+        run: |
+          dbt build --vars '{"wayplorer_landing_schema": "'"$WAYPLORER_LANDING_SCHEMA"'"}'
