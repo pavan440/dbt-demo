@@ -11,6 +11,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    environment: ci
     permissions:
       contents: read
     env:
