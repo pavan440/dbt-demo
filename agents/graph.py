@@ -18,9 +18,10 @@ interventions.
 from __future__ import annotations
 
 import os
-from typing import Literal
+from typing import Any, Literal
 
 from langchain_anthropic import ChatAnthropic
+from langchain_core.messages import SystemMessage
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, StateGraph
 from langgraph.types import Send, interrupt
@@ -29,12 +30,12 @@ from langgraph.prebuilt import create_react_agent
 from agents.state import (
     DataQualityVerdict,
     Department,
-    Evidence,
     Finding,
     GoalNode,
     Reconciliation,
     RevOpsState,
 )
+from agents.tools.retrieval import search_knowledge
 from agents.tools.snowflake import query_warehouse, set_tenant
 
 MODEL = os.environ.get("REVOPS_MODEL", "claude-opus-5")
@@ -87,6 +88,51 @@ Return findings as structured data, not prose. Lead with the outcome.
 
 def _llm() -> ChatAnthropic:
     return ChatAnthropic(model=MODEL, max_tokens=8000)
+
+
+def _cached_system(department: Department) -> SystemMessage:
+    """System prompt split so the stable half caches and the varying half does not.
+
+    Caching is a prefix match, so ordering is the whole game. The request renders
+    tools, then system, then messages. Putting SHARED_RULES in its own block with
+    cache_control - and the per-department brief in an unmarked block after it -
+    means the cached prefix is (tool schemas + shared rules), which is byte
+    identical for all five department agents.
+
+    Where this actually pays: inside one agent's ReAct loop. Every tool call
+    re-sends the entire prefix, so an agent that makes five warehouse queries
+    would otherwise pay for those tokens five times.
+
+    Where it does not: the first fan-out of a run. A cache entry is only readable
+    once the first response has begun streaming, so five agents dispatched
+    simultaneously all miss. That is expected, not a misconfiguration.
+    """
+    return SystemMessage(
+        content=[
+            {
+                "type": "text",
+                "text": SHARED_RULES,
+                "cache_control": {"type": "ephemeral"},
+            },
+            {"type": "text", "text": DEPARTMENT_BRIEFS[department]},
+        ]
+    )
+
+
+def cache_stats(response: Any) -> dict[str, int]:
+    """Pull cache counters off a response so a run can prove caching works.
+
+    If cache_read stays at zero across a multi-tool-call agent turn, something
+    upstream of the breakpoint is varying per request and the prefix is being
+    rebuilt every time.
+    """
+    usage = getattr(response, "usage_metadata", None) or {}
+    details = usage.get("input_token_details", {}) if isinstance(usage, dict) else {}
+    return {
+        "input_tokens": usage.get("input_tokens", 0) if isinstance(usage, dict) else 0,
+        "cache_creation": details.get("cache_creation", 0),
+        "cache_read": details.get("cache_read", 0),
+    }
 
 
 # ---------------------------------------------------------------- deterministic
@@ -201,8 +247,8 @@ def department_agent(payload: dict) -> dict:
 
     agent = create_react_agent(
         _llm(),
-        tools=[query_warehouse],
-        prompt=f"{SHARED_RULES}\n\n{DEPARTMENT_BRIEFS[department]}",
+        tools=[query_warehouse, search_knowledge],
+        prompt=_cached_system(department),
         response_format=Finding,
     )
     result = agent.invoke(
