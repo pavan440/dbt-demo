@@ -11,3 +11,11 @@ org_retailmesh_peak,NA_WEST,North America West,NA,SMB,false
 org_retailmesh_peak,NA_EAST,North America East,NA,SMB,false
 org_retailmesh_peak,EMEA,Europe Middle East Africa,EMEA,SMB,false
 org_retailmesh_peak,APAC,Asia Pacific,APAC,SMB,false
+org_edutech_orbit,NA_WEST,North America West,NA,MM,false
+org_edutech_orbit,NA_EAST,North America East,NA,MM,true
+org_edutech_orbit,EMEA,Europe Middle East Africa,EMEA,SMB,false
+org_edutech_orbit,APAC,Asia Pacific,APAC,SMB,false
+org_logisticsforge_axis,NA_WEST,North America West,NA,ENT,true
+org_logisticsforge_axis,NA_EAST,North America East,NA,MM,false
+org_logisticsforge_axis,EMEA,Europe Middle East Africa,EMEA,ENT,true
+org_logisticsforge_axis,APAC,Asia Pacific,APAC,MM,false

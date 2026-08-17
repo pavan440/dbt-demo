@@ -91,3 +91,73 @@ models:
       - dbt_utils.unique_combination_of_columns:
           arguments:
             combination_of_columns: [organization_id, goal_id]
+
+  - name: int_driver_history
+    description: >
+      Feasibility inputs at team x territory x owner grain: capacity (headcount,
+      ramp-adjusted), deal outcomes (won/lost/open, ACV), and activity.
+      cycle_days and stage_conversion_rate are emitted null on purpose - both
+      need opportunity stage history, which does not exist yet, and estimating
+      them would launder a guess into a feasibility score.
+    columns:
+      - name: organization_id
+        tests: [not_null]
+      - name: ramp_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: [NOT_STARTED, RAMPING, FULL]
+      - name: win_rate
+        description: Null when the scope has decided no deals - not zero.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              [organization_id, fiscal_period_id, team_id, territory_id, owner_id]
+
+  - name: mart_goal_feasibility
+    description: >
+      Coverage-and-capacity assessment per goal. Deliberately not a probability:
+      P(attain) needs fitted driver distributions, which need several closed
+      periods. This asks whether existing pipeline, converted at the rate this
+      scope actually converts, covers what is left in the time remaining.
+    columns:
+      - name: goal_id
+        tests: [not_null]
+      - name: organization_id
+        tests: [not_null]
+      - name: evidence_rung
+        description: >
+          Which rung of the fallback ladder supplied the win rate. Travels with
+          the answer because "peers in your industry" and "your own last 40
+          deals" justify a number very differently.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [OWN_SCOPE, OWN_TENANT, PEER_COHORT, GLOBAL_PRIOR]
+      - name: feasibility_band
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [CONSERVATIVE, REALISTIC, STRETCH, UNREALISTIC, ATTAINED, NOT_ASSESSABLE]
+      - name: binding_constraint
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  [ON_PLAN, PIPELINE_SHORTFALL, WIN_RATE_STRETCH, NO_PIPELINE,
+                   NO_RAMPED_CAPACITY, NONE_TARGET_MET, NOT_ASSESSABLE]
+      - name: applied_win_rate
+        tests:
+          - dbt_utils.accepted_range:
+              arguments:
+                min_value: 0
+                max_value: 1
+                inclusive: true
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [organization_id, goal_id]

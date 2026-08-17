@@ -17,3 +17,15 @@ org_retailmesh_peak,u_chris,Chris Lindqvist,chris@peakmesh.test,MARKETER,MARKETI
 org_retailmesh_peak,u_dina,Dina Haddad,dina@peakmesh.test,CSM,CS,u_anna,team_success,NA_EAST,2025-02-10,2025-05-10,true,128000
 org_retailmesh_peak,u_eli,Eli Nakamura,eli@peakmesh.test,AE,SALES,u_ben,team_sales,EMEA,2025-07-07,2025-10-07,true,150000
 org_retailmesh_peak,u_faye,Faye Mbeki,faye@peakmesh.test,AE,SALES,u_ben,team_sales,APAC,2026-04-06,2026-07-06,true,150000
+org_edutech_orbit,u_anna,Anna Reyes,anna@orbitcampus.test,EXEC,COMPANY,,team_company,NA_EAST,2024-02-05,2024-02-05,true,265000
+org_edutech_orbit,u_ben,Ben Okafor,ben@orbitcampus.test,MANAGER,SALES,u_anna,team_sales,NA_EAST,2024-06-17,2024-09-17,true,205000
+org_edutech_orbit,u_chris,Chris Lindqvist,chris@orbitcampus.test,MARKETER,MARKETING,u_anna,team_growth,NA_WEST,2024-10-14,2025-01-14,true,158000
+org_edutech_orbit,u_dina,Dina Haddad,dina@orbitcampus.test,CSM,CS,u_anna,team_success,EMEA,2025-03-03,2025-06-03,true,142000
+org_edutech_orbit,u_eli,Eli Nakamura,eli@orbitcampus.test,AE,SALES,u_ben,team_sales,NA_WEST,2025-08-11,2025-11-11,true,175000
+org_edutech_orbit,u_faye,Faye Mbeki,faye@orbitcampus.test,AE,SALES,u_ben,team_sales,APAC,2026-05-04,2026-08-04,true,175000
+org_logisticsforge_axis,u_anna,Anna Reyes,anna@axisforge.test,EXEC,COMPANY,,team_company,EMEA,2023-07-10,2023-07-10,true,310000
+org_logisticsforge_axis,u_ben,Ben Okafor,ben@axisforge.test,MANAGER,SALES,u_anna,team_sales,EMEA,2023-11-20,2024-02-20,true,235000
+org_logisticsforge_axis,u_chris,Chris Lindqvist,chris@axisforge.test,MARKETER,MARKETING,u_anna,team_growth,NA_WEST,2024-09-09,2024-12-09,true,168000
+org_logisticsforge_axis,u_dina,Dina Haddad,dina@axisforge.test,CSM,CS,u_anna,team_success,NA_EAST,2025-01-27,2025-04-27,true,152000
+org_logisticsforge_axis,u_eli,Eli Nakamura,eli@axisforge.test,AE,SALES,u_ben,team_sales,NA_WEST,2025-06-16,2025-09-16,true,198000
+org_logisticsforge_axis,u_faye,Faye Mbeki,faye@axisforge.test,AE,SALES,u_ben,team_sales,APAC,2026-03-02,2026-06-02,true,198000

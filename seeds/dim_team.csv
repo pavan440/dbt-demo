@@ -17,3 +17,15 @@ org_retailmesh_peak,team_growth,Growth Marketing,team_company,MARKETING,CC-200,u
 org_retailmesh_peak,team_success,Customer Success,team_company,CS,CC-300,u_dina
 org_retailmesh_peak,team_revops,Revenue Operations,team_company,REVOPS,CC-400,u_eli
 org_retailmesh_peak,team_finance,Finance,team_company,FINANCE,CC-500,u_faye
+org_edutech_orbit,team_company,Orbit Campus Cloud,,COMPANY,CC-000,u_anna
+org_edutech_orbit,team_sales,Sales,team_company,SALES,CC-100,u_ben
+org_edutech_orbit,team_growth,Growth Marketing,team_company,MARKETING,CC-200,u_chris
+org_edutech_orbit,team_success,Customer Success,team_company,CS,CC-300,u_dina
+org_edutech_orbit,team_revops,Revenue Operations,team_company,REVOPS,CC-400,u_eli
+org_edutech_orbit,team_finance,Finance,team_company,FINANCE,CC-500,u_faye
+org_logisticsforge_axis,team_company,Axis Logistics Forge,,COMPANY,CC-000,u_anna
+org_logisticsforge_axis,team_sales,Sales,team_company,SALES,CC-100,u_ben
+org_logisticsforge_axis,team_growth,Growth Marketing,team_company,MARKETING,CC-200,u_chris
+org_logisticsforge_axis,team_success,Customer Success,team_company,CS,CC-300,u_dina
+org_logisticsforge_axis,team_revops,Revenue Operations,team_company,REVOPS,CC-400,u_eli
+org_logisticsforge_axis,team_finance,Finance,team_company,FINANCE,CC-500,u_faye
