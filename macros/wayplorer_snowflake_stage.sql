@@ -109,4 +109,24 @@
     "loaded_at timestamp_ntz default current_timestamp()" ~
     ")"
   ) %}
+
+  {% do run_query(
+    "create table if not exists " ~ landing_db ~ "." ~ landing_schema ~ ".WAYPLORER_SILVER_LOAD_AUDIT (" ~
+    "audit_logged_at timestamp_ntz default current_timestamp()," ~
+    "copy_query_id string," ~
+    "target_table string," ~
+    "stage_name string," ~
+    "source_path string," ~
+    "file_name string," ~
+    "status string," ~
+    "rows_parsed number," ~
+    "rows_loaded number," ~
+    "error_limit number," ~
+    "errors_seen number," ~
+    "first_error string," ~
+    "first_error_line number," ~
+    "first_error_character number," ~
+    "first_error_column_name string" ~
+    ")"
+  ) %}
 {% endmacro %}

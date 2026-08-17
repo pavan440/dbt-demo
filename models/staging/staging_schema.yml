@@ -11,7 +11,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']
+              arguments:
+                values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']
       - name: application_id
         tests:
           - not_null
@@ -19,7 +20,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['INSERT', 'UPDATE']
+              arguments:
+                values: ['INSERT', 'UPDATE']
       - name: cdc_timestamp
         tests:
           - not_null
@@ -40,12 +42,14 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['CALLS', 'EMAILS', 'TASKS']
+              arguments:
+                values: ['CALLS', 'EMAILS', 'TASKS']
       - name: activity_type
         tests:
           - not_null
           - accepted_values:
-              values: ['CALL', 'EMAIL', 'TASK']
+              arguments:
+                values: ['CALL', 'EMAIL', 'TASK']
       - name: application_id
         tests:
           - not_null
@@ -56,7 +60,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['INSERT', 'UPDATE']
+              arguments:
+                values: ['INSERT', 'UPDATE']
       - name: record_id
         tests:
           - not_null
@@ -74,4 +79,5 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['READY', 'PARTIAL', 'BLOCKED']
+              arguments:
+                values: ['READY', 'PARTIAL', 'BLOCKED']

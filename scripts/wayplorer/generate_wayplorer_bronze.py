@@ -14,6 +14,8 @@ OPPORTUNITY_STAGES = ["Prospecting", "Qualified", "Proposal", "Negotiation", "Cl
 CONTRACT_STATUSES = ["ACTIVE", "EXPIRED", "PENDING"]
 CALL_OUTCOMES = ["CONNECTED", "VOICEMAIL", "NO_ANSWER"]
 EMAIL_STATUSES = ["SENT", "OPENED", "REPLIED"]
+TASK_STATUSES = ["OPEN", "IN_PROGRESS", "DONE"]
+TASK_PRIORITIES = ["LOW", "MEDIUM", "HIGH"]
 
 
 @dataclass
@@ -172,6 +174,32 @@ def build_emails(base_time: datetime, sample_size: int) -> list[dict]:
     return rows
 
 
+def build_tasks(base_time: datetime, sample_size: int) -> list[dict]:
+    rows = []
+    for i in range(1, sample_size * 2 + 1):
+        ts = iso_ts(base_time, 600 + i)
+        due_date = (base_time + timedelta(days=random.randint(1, 30))).date().isoformat()
+        completed_at = None
+        status = random.choice(TASK_STATUSES)
+        if status == "DONE":
+            completed_at = iso_ts(base_time, 700 + i)
+        rows.append(
+            {
+                **asdict(BaseRecord("wayplorer_crm", ts, "UPSERT", base_time.date().isoformat())),
+                "taskId": f"TSK{i:05d}",
+                "accountId": f"ACC{((i - 1) % sample_size) + 1:04d}",
+                "leadId": f"LED{((i - 1) % sample_size) + 1:04d}",
+                "clientId": random.choice(CLIENT_IDS),
+                "taskSubject": f"Wayplorer follow-up task {i}",
+                "taskStatus": status,
+                "taskPriority": random.choice(TASK_PRIORITIES),
+                "dueDate": due_date,
+                "completedAt": completed_at,
+            }
+        )
+    return rows
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate sample Wayplorer Bronze CDC files.")
     parser.add_argument("--output-dir", default="data/bronze", help="Local Bronze root directory.")
@@ -194,6 +222,7 @@ def main() -> None:
         "contract": build_contracts(base_time, args.sample_size),
         "call": build_calls(base_time, args.sample_size),
         "email": build_emails(base_time, args.sample_size),
+        "task": build_tasks(base_time, args.sample_size),
     }
 
     for entity, records in entity_builders.items():

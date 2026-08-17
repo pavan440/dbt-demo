@@ -17,7 +17,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']
+              arguments:
+                values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']
 
   - name: int_organization_daily_scorecard
     description: Tenant-day scorecard combining KPI snapshots and CRM activity rollups.
@@ -32,4 +33,5 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['READY', 'PARTIAL', 'BLOCKED']
+              arguments:
+                values: ['READY', 'PARTIAL', 'BLOCKED']

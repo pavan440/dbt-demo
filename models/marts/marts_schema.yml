@@ -14,7 +14,8 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['BLOCKED', 'HEALTHY', 'WATCH', 'AT_RISK']
+              arguments:
+                values: ['BLOCKED', 'HEALTHY', 'WATCH', 'AT_RISK']
 
   - name: mart_tenant_module_snapshot
     description: Tenant and module snapshot for CRM record distribution and amount coverage.
@@ -26,4 +27,5 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']
+              arguments:
+                values: ['ACCOUNTS', 'LEADS', 'OPPORTUNITIES']

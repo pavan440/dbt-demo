@@ -83,6 +83,20 @@ ENTITY_SCHEMAS = {
         ("cdc_timestamp", T.TimestampType(), True),
         ("operationType", T.StringType(), True),
     ],
+    "task": [
+        ("applicationId", T.StringType(), True),
+        ("taskId", T.StringType(), True),
+        ("accountId", T.StringType(), False),
+        ("leadId", T.StringType(), False),
+        ("clientId", T.StringType(), True),
+        ("taskSubject", T.StringType(), False),
+        ("taskStatus", T.StringType(), False),
+        ("taskPriority", T.StringType(), False),
+        ("dueDate", T.DateType(), False),
+        ("completedAt", T.TimestampType(), False),
+        ("cdc_timestamp", T.TimestampType(), True),
+        ("operationType", T.StringType(), True),
+    ],
 }
 
 
