@@ -4,7 +4,18 @@ sources:
   - name: wayplorer_bronze
     database: "{{ target.database }}"
     schema: "{{ var('wayplorer_bronze_schema', 'BRONZE') }}"
-    description: Raw Wayplorer CRM entities landed before Silver normalization.
+    description: >
+      Raw Wayplorer CRM entities landed before Silver normalization.
+
+      Disabled by default: these tables are generated locally under data/bronze
+      and uploaded to S3, but have never been loaded into Snowflake, so the
+      column tests below fail with "table does not exist" on every CI run. The
+      definitions are kept because they document the intended contract.
+
+      Enable once the bronze load exists:
+        dbt build --vars '{"wayplorer_bronze_enabled": true}'
+    config:
+      enabled: "{{ var('wayplorer_bronze_enabled', false) }}"
     tables:
       - name: account_raw
         identifier: ACCOUNT_RAW
