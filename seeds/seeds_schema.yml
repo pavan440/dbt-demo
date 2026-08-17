@@ -1,0 +1,111 @@
+version: 2
+
+seeds:
+  - name: dim_team
+    description: Org unit hierarchy per tenant. parent_team_id makes department-wise goal decomposition possible.
+    config:
+      column_types:
+        organization_id: varchar(64)
+        team_id: varchar(64)
+        parent_team_id: varchar(64)
+    columns:
+      - name: organization_id
+        tests: [not_null]
+      - name: team_id
+        tests: [not_null]
+      - name: department
+        tests:
+          - accepted_values:
+              arguments:
+                values: [COMPANY, SALES, MARKETING, CS, REVOPS, FINANCE]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [organization_id, team_id]
+
+  - name: dim_user
+    description: >
+      People dimension. User IDs are only unique within a tenant — the sample
+      generator reuses the same owner IDs across every organization — so the
+      grain is (organization_id, user_id), never user_id alone.
+    config:
+      column_types:
+        organization_id: varchar(64)
+        user_id: varchar(64)
+        manager_id: varchar(64)
+    columns:
+      - name: organization_id
+        tests: [not_null]
+      - name: user_id
+        tests: [not_null]
+      - name: role
+        tests:
+          - accepted_values:
+              arguments:
+                values: [AE, SDR, AM, CSM, MARKETER, MANAGER, EXEC]
+      - name: ramp_end_date
+        description: Date the rep reaches full productivity. Drives capacity-based goal splits.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [organization_id, user_id]
+
+  - name: dim_territory
+    description: Territory dimension with geo and segment, for territory-level goal rollup.
+    columns:
+      - name: organization_id
+        tests: [not_null]
+      - name: segment
+        tests:
+          - accepted_values:
+              arguments:
+                values: [SMB, MM, ENT]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [organization_id, territory_id]
+
+  - name: goal
+    description: >
+      The goal tree. parent_goal_id carries the decomposition; relation_type
+      says whether a child sums into its parent, is derived from it, or merely
+      constrains it. Append-only — never update a row in place, add a version.
+    config:
+      column_types:
+        goal_id: varchar(64)
+        organization_id: varchar(64)
+        parent_goal_id: varchar(64)
+        fiscal_period_id: varchar(16)
+    columns:
+      - name: goal_id
+        tests: [not_null]
+      - name: organization_id
+        tests: [not_null]
+      - name: level
+        tests:
+          - accepted_values:
+              arguments:
+                values: [COMPANY, DEPARTMENT, TEAM, REP, TERRITORY, CHANNEL, PRODUCT, SEGMENT]
+      - name: relation_type
+        description: SUM children roll up to the parent; DERIVED and GUARDRAIL do not.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [SUM, DERIVED, GUARDRAIL]
+      - name: split_method
+        tests:
+          - accepted_values:
+              arguments:
+                values: [TOP_DOWN_PCT, BOTTOM_UP, CAPACITY, HISTORICAL, MANUAL]
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values: [DRAFT, PROPOSED, APPROVED, LOCKED, RETIRED]
+      - name: target_value
+        tests: [not_null]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [organization_id, goal_id, version]

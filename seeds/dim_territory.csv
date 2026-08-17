@@ -1,0 +1,13 @@
+organization_id,territory_id,territory_name,geo,segment,named_account_flag
+org_fintech_nova,NA_WEST,North America West,NA,ENT,true
+org_fintech_nova,NA_EAST,North America East,NA,ENT,true
+org_fintech_nova,EMEA,Europe Middle East Africa,EMEA,MM,false
+org_fintech_nova,APAC,Asia Pacific,APAC,MM,false
+org_healthops_pulse,NA_WEST,North America West,NA,MM,false
+org_healthops_pulse,NA_EAST,North America East,NA,MM,true
+org_healthops_pulse,EMEA,Europe Middle East Africa,EMEA,MM,false
+org_healthops_pulse,APAC,Asia Pacific,APAC,SMB,false
+org_retailmesh_peak,NA_WEST,North America West,NA,SMB,false
+org_retailmesh_peak,NA_EAST,North America East,NA,SMB,false
+org_retailmesh_peak,EMEA,Europe Middle East Africa,EMEA,SMB,false
+org_retailmesh_peak,APAC,Asia Pacific,APAC,SMB,false

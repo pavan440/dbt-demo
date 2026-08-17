@@ -1,0 +1,8 @@
+# Agent runtime — separate from the dbt runtime so CI can install one or both.
+langgraph>=0.6
+langchain-core>=0.3
+langchain-anthropic>=0.3
+anthropic>=0.69
+snowflake-connector-python>=4.7
+pydantic>=2.11
+boto3>=1.40

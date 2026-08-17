@@ -6,8 +6,9 @@
 __pycache__/
 *.pyc
 
-# dbt build artifacts and logs
+# dbt build artifacts, packages, and logs
 target/
+dbt_packages/
 logs/
 
 # Local caches and temp files

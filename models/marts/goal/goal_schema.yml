@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: int_goal_tree
+    description: >
+      Flattened goal hierarchy with depth, root, ancestry path, and rollup
+      reconciliation. Only SUM children are summed against a parent — DERIVED
+      and GUARDRAIL children constrain the plan rather than contributing to it.
+    columns:
+      - name: goal_id
+        tests: [not_null]
+      - name: organization_id
+        description: Tenant scope. Part of the recursive join predicate — goal IDs are unique only within a tenant.
+        tests: [not_null]
+      - name: rollup_status
+        description: BALANCED, OVER_ALLOCATED, UNDER_ALLOCATED, or NO_SUM_CHILDREN.
+        tests:
+          - accepted_values:
+              arguments:
+                values: [BALANCED, OVER_ALLOCATED, UNDER_ALLOCATED, NO_SUM_CHILDREN]
+      - name: depth
+        tests: [not_null]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [organization_id, goal_id]
+
+  - name: int_metric_actual
+    description: >
+      Actuals at the finest scope the source supports — team x territory x owner.
+      Not pre-aggregated to one axis: team and territory crosscut, so collapsing
+      to a single axis makes child goals exceed their parents.
+    columns:
+      - name: organization_id
+        tests: [not_null]
+      - name: metric_key
+        tests: [not_null]
+      - name: source_status
+        tests:
+          - accepted_values:
+              arguments:
+                values: [COMPUTED]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              [organization_id, fiscal_period_id, metric_key, team_id, territory_id, owner_id]
+
+  - name: dim_fiscal_calendar
+    description: >
+      Daily fiscal calendar with period bounds, workday index, and the expected
+      attainment curve used for pacing. Currently linear — replace with a fitted
+      seasonality curve once enough closed periods exist.
+    columns:
+      - name: calendar_date
+        tests: [not_null, unique]
+      - name: fiscal_period_id
+        tests: [not_null]
+
+  - name: mart_goal_attainment
+    description: >
+      Target vs actual vs pace, one row per goal per period. The single source
+      of attainment for every agent — nothing downstream recomputes it.
+    columns:
+      - name: goal_id
+        tests: [not_null]
+      - name: organization_id
+        tests: [not_null]
+      - name: pacing_status
+        description: >
+          NOT_MEASURABLE means the metric has no source yet — it is a data gap,
+          not a business problem, and must never be reported as AT_RISK.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  [ATTAINED, AHEAD, ON_TRACK, BEHIND, AT_RISK, GUARDRAIL, NOT_STARTED,
+                   NOT_MEASURABLE, NO_SCOPE_MATCH]
+      - name: source_status
+        description: >
+          COMPUTED = measured. NO_SOURCE = the metric has no source table at all
+          (a data gap). NO_SCOPE_MATCH = the metric is measurable but this goal's
+          scope matched no records: a genuine zero, or a scope defined against
+          people or territories the facts disagree with.
+        tests:
+          - accepted_values:
+              arguments:
+                values: [COMPUTED, NO_SOURCE, NO_SCOPE_MATCH]
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [organization_id, goal_id]

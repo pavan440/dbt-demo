@@ -1,0 +1,19 @@
+organization_id,user_id,full_name,work_email,role,department,manager_id,team_id,territory_id,hire_date,ramp_end_date,is_active,fully_loaded_cost_usd
+org_fintech_nova,u_anna,Anna Reyes,anna@novaledger.test,EXEC,COMPANY,,team_company,NA_WEST,2023-01-16,2023-01-16,true,320000
+org_fintech_nova,u_ben,Ben Okafor,ben@novaledger.test,MANAGER,SALES,u_anna,team_sales,NA_WEST,2023-04-03,2023-07-03,true,240000
+org_fintech_nova,u_chris,Chris Lindqvist,chris@novaledger.test,MARKETER,MARKETING,u_anna,team_growth,NA_EAST,2024-02-12,2024-05-12,true,185000
+org_fintech_nova,u_dina,Dina Haddad,dina@novaledger.test,CSM,CS,u_anna,team_success,EMEA,2024-06-10,2024-09-10,true,165000
+org_fintech_nova,u_eli,Eli Nakamura,eli@novaledger.test,AE,SALES,u_ben,team_sales,NA_EAST,2025-01-13,2025-04-13,true,210000
+org_fintech_nova,u_faye,Faye Mbeki,faye@novaledger.test,AE,SALES,u_ben,team_sales,APAC,2026-06-01,2026-09-01,true,210000
+org_healthops_pulse,u_anna,Anna Reyes,anna@pulsecare.test,EXEC,COMPANY,,team_company,NA_EAST,2023-03-06,2023-03-06,true,295000
+org_healthops_pulse,u_ben,Ben Okafor,ben@pulsecare.test,MANAGER,SALES,u_anna,team_sales,NA_EAST,2023-09-11,2023-12-11,true,225000
+org_healthops_pulse,u_chris,Chris Lindqvist,chris@pulsecare.test,MARKETER,MARKETING,u_anna,team_growth,NA_WEST,2024-05-20,2024-08-20,true,170000
+org_healthops_pulse,u_dina,Dina Haddad,dina@pulsecare.test,CSM,CS,u_anna,team_success,NA_WEST,2024-11-04,2025-02-04,true,155000
+org_healthops_pulse,u_eli,Eli Nakamura,eli@pulsecare.test,AE,SALES,u_ben,team_sales,EMEA,2025-05-05,2025-08-05,true,195000
+org_healthops_pulse,u_faye,Faye Mbeki,faye@pulsecare.test,SDR,SALES,u_ben,team_sales,APAC,2026-02-16,2026-05-16,true,120000
+org_retailmesh_peak,u_anna,Anna Reyes,anna@peakmesh.test,EXEC,COMPANY,,team_company,NA_WEST,2024-01-08,2024-01-08,true,240000
+org_retailmesh_peak,u_ben,Ben Okafor,ben@peakmesh.test,MANAGER,SALES,u_anna,team_sales,NA_WEST,2024-04-15,2024-07-15,true,180000
+org_retailmesh_peak,u_chris,Chris Lindqvist,chris@peakmesh.test,MARKETER,MARKETING,u_anna,team_growth,NA_EAST,2024-08-19,2024-11-19,true,140000
+org_retailmesh_peak,u_dina,Dina Haddad,dina@peakmesh.test,CSM,CS,u_anna,team_success,NA_EAST,2025-02-10,2025-05-10,true,128000
+org_retailmesh_peak,u_eli,Eli Nakamura,eli@peakmesh.test,AE,SALES,u_ben,team_sales,EMEA,2025-07-07,2025-10-07,true,150000
+org_retailmesh_peak,u_faye,Faye Mbeki,faye@peakmesh.test,AE,SALES,u_ben,team_sales,APAC,2026-04-06,2026-07-06,true,150000

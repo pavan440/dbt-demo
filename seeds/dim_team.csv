@@ -1,0 +1,19 @@
+organization_id,team_id,team_name,parent_team_id,department,cost_center,leader_user_id
+org_fintech_nova,team_company,Nova Ledger,,COMPANY,CC-000,u_anna
+org_fintech_nova,team_sales,Sales,team_company,SALES,CC-100,u_ben
+org_fintech_nova,team_growth,Growth Marketing,team_company,MARKETING,CC-200,u_chris
+org_fintech_nova,team_success,Customer Success,team_company,CS,CC-300,u_dina
+org_fintech_nova,team_revops,Revenue Operations,team_company,REVOPS,CC-400,u_eli
+org_fintech_nova,team_finance,Finance,team_company,FINANCE,CC-500,u_faye
+org_healthops_pulse,team_company,Pulse Care Ops,,COMPANY,CC-000,u_anna
+org_healthops_pulse,team_sales,Sales,team_company,SALES,CC-100,u_ben
+org_healthops_pulse,team_growth,Growth Marketing,team_company,MARKETING,CC-200,u_chris
+org_healthops_pulse,team_success,Customer Success,team_company,CS,CC-300,u_dina
+org_healthops_pulse,team_revops,Revenue Operations,team_company,REVOPS,CC-400,u_eli
+org_healthops_pulse,team_finance,Finance,team_company,FINANCE,CC-500,u_faye
+org_retailmesh_peak,team_company,Peak Retail Mesh,,COMPANY,CC-000,u_anna
+org_retailmesh_peak,team_sales,Sales,team_company,SALES,CC-100,u_ben
+org_retailmesh_peak,team_growth,Growth Marketing,team_company,MARKETING,CC-200,u_chris
+org_retailmesh_peak,team_success,Customer Success,team_company,CS,CC-300,u_dina
+org_retailmesh_peak,team_revops,Revenue Operations,team_company,REVOPS,CC-400,u_eli
+org_retailmesh_peak,team_finance,Finance,team_company,FINANCE,CC-500,u_faye
